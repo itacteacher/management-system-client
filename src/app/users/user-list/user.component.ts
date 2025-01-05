@@ -1,5 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { IPaginatedRespose, UserService } from '../../services/user.service';
 import { MatTableModule } from '@angular/material/table';
 import { User } from '../../models/user.type';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -21,14 +22,9 @@ export class UserComponent implements OnInit {
   dialog = inject(MatDialog);
   
   users = signal<Array<User>>([]);
-  pageIndex = signal<number>(0);
-  pageSize = signal<number>(5);
-
-  paginatedUsers = computed(() => {
-    const startIndex = this.pageIndex() * this.pageSize();
-    const endIndex = startIndex + this.pageSize();
-    return this.users().slice(startIndex, endIndex);
-  });
+  pageNumber = 0;
+  pageSize = 5;
+  totalCount = 0;
   
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
   errorMessage = '';
@@ -40,15 +36,13 @@ export class UserComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userService.getUsers().subscribe({
-      next: (data) =>
-      {
-        this.users.set(data);
+    this.userService.getPaginatedUsers(this.pageNumber, this.pageSize).subscribe({
+      next: (response: IPaginatedRespose<User>) => {
+        this.users.set(response.items);
+        this.totalCount = response.totalCount;
       },
       error: (err) => {
-        this.errorMessage = err;
-        console.error('Error occured!', err);
-        this.snackbar.openSnackBar(err, 'close');
+        console.error(err);
       }
     })
   }
@@ -67,22 +61,33 @@ export class UserComponent implements OnInit {
   }
 
   onDeleteUser(userId: string): void {
-    if(confirm('Are you sure you want to delete this user?')) {
-      this.userService.deleteUser(userId).subscribe({
-        next: () => {
-          console.log('User deleted');
-          this.loadUsers();
-        },
-        error: (err) => {
-          console.error('Error occured whilst deleting this user', err);
-          this.snackbar.openSnackBar(err, 'close');
-        }
-      })
-    }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: {
+        title: 'Confirm deletion',
+        message: 'Are you sure you want to delete this user?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.userService.deleteUser(userId).subscribe({
+          next: () => {
+            console.log('user deleted');
+            this.loadUsers();
+          },
+          error: (err) => {
+            console.error('Error occured whilst deleting a user', err);
+            this.snackbar.openSnackBar(err, 'OK');
+          }
+        })
+      }
+    })
   }
 
   onPageChanged(event: PageEvent): void {
-    this.pageIndex.set(event.pageIndex);
-    this.pageSize.set(event.pageSize);
+    this.pageSize = event.pageSize;
+    this.pageNumber = event.pageIndex + 1;
+    this.loadUsers();
   }
 }

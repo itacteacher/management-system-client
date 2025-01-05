@@ -12,6 +12,10 @@ export class ApiConfigService {
     return this.apiBaseUrl;
   }
 
+  get authUrl(): string {
+    return `${this.apiBaseUrl}/Auth`;
+  }
+
   get userUrl(): string {
     return `${this.apiBaseUrl}/Users`;
   }

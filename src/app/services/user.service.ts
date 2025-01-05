@@ -5,6 +5,15 @@ import { ApiConfigService } from './api-config.service';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { UserUpdate } from '../models/user-update.type';
 
+export interface IPaginatedRespose<T> {
+  items: T[];
+  pageNumber: number,
+  totalPages: number,
+  totalCount: number,
+  hasPreviousPage: boolean,
+  hasNextPage: boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +27,10 @@ export class UserService {
       map((users: User[]) => users.sort((a, b) => a.email.localeCompare(b.email))),
       catchError(this.handleError)
     )
+  }
+
+  getPaginatedUsers(pageNumber: number, pageSize: number): Observable<IPaginatedRespose<User>> {
+    return this.http.get<IPaginatedRespose<User>>(`${this.apiConfig.userUrl}/Paginated?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   getUserById(id: string): Observable<User> {
