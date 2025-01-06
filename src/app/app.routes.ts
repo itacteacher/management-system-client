@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { UserComponent } from './users/user-list/user.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { LoginComponent } from './auth/login/login.component';
-import { authGuard } from './auth/auth.guard';
+import { HomeComponent } from './features/home/home.component';
+import { UserComponent } from './features/users/components/user-list/user-list.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
+import { RegisterComponent } from './features/auth/components/register/register.component';
 
 export const routes: Routes = [
     {
