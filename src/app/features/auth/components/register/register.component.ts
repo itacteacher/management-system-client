@@ -7,7 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
-import { AuthService, IRegisterRequest } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { IRegisterRequest } from '../../models/register-request.model';
 
 @Component({
   selector: 'app-register',
@@ -44,7 +45,7 @@ export class RegisterComponent {
       const formValues: IRegisterRequest = this.registerForm.value;
 
       try {
-        const response = await this.authService.register(formValues);
+        await this.authService.register(formValues);
         this.router.navigate(['/user']);
       } catch (error) {
 

@@ -3,36 +3,28 @@ import { ApiConfigService } from '../../../core/services/api-config.service';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
-
-export interface IRegisterRequest {
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  password: string;
-}
-
-export interface ILoginRequest {
-  userName: string;
-  password: string;
-}
+import { IRegisterRequest } from '../models/register-request.model';
+import { ILoginRequest } from '../models/login-request.model';
+import { StorageService } from '../../../core/services/storage.service';
+import { IAuthResponse } from '../models/auth-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private config = inject(ApiConfigService);
+  private storage = inject(StorageService);
   private http = inject(HttpClient);
   private router = inject(Router);
-
-  private readonly TOKEN_KEY = 'authToken';
+  
+  readonly TOKEN_KEY = 'authToken';
+  readonly REFRESH_TOKEN_KEY = 'refreshToken';
 
   constructor() { }
 
   async register(userData: IRegisterRequest) {
     try {
-      const response = await firstValueFrom(this.http.post(`${this.config.authUrl}/register`, userData));
-      return response;
+      return await firstValueFrom(this.http.post(`${this.config.authUrl}/register`, userData));
     } catch (error) {
       console.error(error);
       throw error;
@@ -41,32 +33,39 @@ export class AuthService {
 
   async login(credentials: ILoginRequest) {
     try {
-      const response = await firstValueFrom(this.http.post<{token: string, refreshToken: string}>(`${this.config.authUrl}/login`, credentials));
-      this.setLocalStorageItem(this.TOKEN_KEY, response.token);
+      await this.authenticate(`${this.config.authUrl}/login`, credentials);
     } catch (error) {
-      console.error(error);
+      console.error('Login error', error);
+      throw error;
+    }
+  }
+
+  async refreshToken(refreshToken: string): Promise<{ token: string; refreshToken: string }> {
+    try {
+      return await this.authenticate(`${this.config.authUrl}/refresh-token`, { refreshToken });
+    } catch (error) {
+      console.error('Error refreshing token', error);
+      this.logout();
       throw error;
     }
   }
 
   logout(): void {
-    this.removeLocalStorageItem(this.TOKEN_KEY);
+    this.storage.removeItem(this.TOKEN_KEY);
+    this.storage.removeItem(this.REFRESH_TOKEN_KEY);
     this.router.navigate(['']);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
-  }
-
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    return !!this.storage.getItem(this.TOKEN_KEY);
   }
 
-  private setLocalStorageItem(key: string, value: string): void {
-    localStorage.setItem(key, value);
-  }
+  private async authenticate(url: string, body: any): Promise<IAuthResponse> {
+    const response = await firstValueFrom(this.http.post<IAuthResponse>(url, body));
 
-  private removeLocalStorageItem(key: string): void {
-    localStorage.removeItem(key);
+    this.storage.setItem(this.TOKEN_KEY, response.token);
+    this.storage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);
+
+    return response;
   }
 }
