@@ -8,3 +8,20 @@ html {
     density: 0
   ));
 }
+
+body {
+  background: linear-gradient(to right, #98C9E6, #F8CB51, #98C9E6);
+
+  min-height: 100vh;
+  margin: 0;
+}
+
+mat-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
