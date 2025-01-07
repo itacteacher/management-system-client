@@ -38,13 +38,13 @@ export class LoginComponent {
   onLogin() {
     if (this.loginForm.valid) {
       const credentials = this.loginForm.value;
-
-      this.authService.login(credentials).then(response => {
-        localStorage.setItem('authToken', response.token);
+      try {
+        const response = this.authService.login(credentials);
+        console.log('Login successful:', response);
         this.router.navigate(['']);
-      }).catch(error => {
-        console.error(error);
-      })
+      } catch(error) {
+        console.error('Login failed:', error);
+      };
     }
   }
 }
