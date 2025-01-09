@@ -5,8 +5,11 @@
         </button>
         <span [routerLink]="''">Management board</span>
         <span class="spacer"></span>
-        <button mat-button [routerLink]="'/register'">Register</button>
-        <button mat-button [routerLink]="'/login'">Login</button>
+        <ng-container *ngIf="!isLoggedIn()">
+            <button mat-button [routerLink]="'/register'">Register</button>
+            <button mat-button [routerLink]="'/login'">Log in</button>
+        </ng-container>
+        <button mat-button *ngIf="isLoggedIn()" (click)="onLogout()">Log out</button>
         <button mat-icon-button>
             <mat-icon>account_circle</mat-icon>
         </button>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    CommonModule,
+  imports: [CommonModule,
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -28,6 +28,8 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  hidePassword = signal(true);
+  
   constructor() {
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required]],
@@ -46,5 +48,9 @@ export class LoginComponent {
         console.error('Login failed:', error);
       };
     }
+  }
+
+  togglePasswordVisibility() {
+    this.hidePassword.update(value => !value); // Обновляем значение сигнала
   }
 }
