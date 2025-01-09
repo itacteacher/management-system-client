@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SnackbarService {
   action: string = 'OK';
@@ -13,7 +13,7 @@ export class SnackbarService {
     this.snackBar.open(message, this.action, {
       duration: 3000,
       verticalPosition: 'bottom',
-      horizontalPosition: 'right'
+      horizontalPosition: 'right',
     });
   }
 
@@ -21,7 +21,7 @@ export class SnackbarService {
     this.snackBar.open(message, this.action, {
       duration: 4000,
       verticalPosition: 'bottom',
-      horizontalPosition: 'right'
+      horizontalPosition: 'right',
     });
   }
 
@@ -29,7 +29,7 @@ export class SnackbarService {
     this.snackBar.open(message, this.action, {
       duration: 5000,
       verticalPosition: 'bottom',
-      horizontalPosition: 'right'
+      horizontalPosition: 'right',
     });
   }
 }

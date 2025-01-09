@@ -12,17 +12,9 @@ import { IRegisterRequest } from '../../models/register-request.model';
 
 @Component({
   selector: 'app-register',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatIconModule, MatCardModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   registerForm: FormGroup;
@@ -39,7 +31,7 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-  
+
   async onRegister(): Promise<void> {
     if (this.registerForm.valid) {
       const formValues: IRegisterRequest = this.registerForm.value;
@@ -47,9 +39,7 @@ export class RegisterComponent {
       try {
         await this.authService.register(formValues);
         this.router.navigate(['/user']);
-      } catch (error) {
-
-      }
+      } catch (error) {}
     } else {
       console.warn('Form is invalid');
     }

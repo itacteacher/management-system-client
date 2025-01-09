@@ -9,18 +9,18 @@ import { StorageService } from '../../../core/services/storage.service';
 import { IAuthResponse } from '../models/auth-response.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private config = inject(ApiConfigService);
   private storage = inject(StorageService);
   private http = inject(HttpClient);
   private router = inject(Router);
-  
+
   readonly TOKEN_KEY = 'authToken';
   readonly REFRESH_TOKEN_KEY = 'refreshToken';
 
-  constructor() { }
+  constructor() {}
 
   async register(userData: IRegisterRequest) {
     try {

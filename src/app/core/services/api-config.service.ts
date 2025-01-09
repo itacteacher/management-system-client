@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiConfigService {
   private readonly apiBaseUrl = 'https://localhost:7042/api';
 
-  constructor() { }
+  constructor() {}
 
   get apiUrl(): string {
     return this.apiBaseUrl;
