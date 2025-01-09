@@ -11,15 +11,9 @@ import { User } from '../../models/user.type';
 
 @Component({
   selector: 'app-edit-user',
-  imports: [
-    FormsModule, 
-    CommonModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatDialogModule, 
-    MatButtonModule],
+  imports: [FormsModule, CommonModule, MatFormFieldModule, MatInputModule, MatDialogModule, MatButtonModule],
   templateUrl: './user-edit.component.html',
-  styleUrl: './user-edit.component.scss'
+  styleUrl: './user-edit.component.scss',
 })
 export class EditUserComponent {
   userService = inject(UserService);
@@ -27,23 +21,27 @@ export class EditUserComponent {
 
   user: User;
 
-  constructor(public dialogRef: MatDialogRef<EditUserComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User) {
-      this.user = { ...data };
+  constructor(
+    public dialogRef: MatDialogRef<EditUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: User
+  ) {
+    this.user = { ...data };
   }
 
   onSave(): void {
-    this.userService.updateUser(this.user.id, {
-      id: this.user.id,
-      firstName: this.user.firstName,
-      lastName: this.user.lastName,
-      email: this.user.email
-    }).subscribe({
-      next: () => {
-        this.dialogRef.close(this.user);
-      },
-      error: (err) => this.snackbar.showError(err)
-    });
+    this.userService
+      .updateUser(this.user.id, {
+        id: this.user.id,
+        firstName: this.user.firstName,
+        lastName: this.user.lastName,
+        email: this.user.email,
+      })
+      .subscribe({
+        next: () => {
+          this.dialogRef.close(this.user);
+        },
+        error: err => this.snackbar.showError(err),
+      });
   }
 
   onClose(): void {

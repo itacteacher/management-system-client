@@ -1,21 +1,21 @@
 <mat-dialog-content>
-    <ng-container *ngIf="user">
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>First Name</mat-label>
-            <input matInput [(ngModel)]="user.firstName">
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Last Name</mat-label>
-            <input matInput [(ngModel)]="user.lastName">
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Email</mat-label>
-            <input matInput [(ngModel)]="user.email">
-        </mat-form-field>
-    </ng-container>
+  <ng-container *ngIf="user">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput [(ngModel)]="user.firstName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput [(ngModel)]="user.lastName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="user.email" />
+    </mat-form-field>
+  </ng-container>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button (click)="onClose()">Cancel</button>
-    <button mat-button (click)="onSave()">Save</button>
+  <button mat-button (click)="onClose()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
 </mat-dialog-actions>

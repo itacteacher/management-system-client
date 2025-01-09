@@ -14,18 +14,18 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
   selector: 'app-user',
   imports: [MatTableModule, MatIconModule, MatButtonModule, MatPaginatorModule],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss'
+  styleUrl: './user-list.component.scss',
 })
 export class UserComponent implements OnInit {
   userService = inject(UserService);
   snackbar = inject(SnackbarService);
   dialog = inject(MatDialog);
-  
+
   users = signal<Array<User>>([]);
   pageNumber = 0;
   pageSize = 5;
   totalCount = 0;
-  
+
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
   errorMessage = '';
 
@@ -41,23 +41,23 @@ export class UserComponent implements OnInit {
         this.users.set(response.items);
         this.totalCount = response.totalCount;
       },
-      error: (err) => {
+      error: err => {
         console.error(err);
-      }
-    })
+      },
+    });
   }
 
   onEditUser(user: User): void {
     const dialogRef = this.dialog.open(EditUserComponent, {
-      data: user
+      data: user,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if(result) {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         console.log('User data after edit', result);
         this.loadUsers();
       }
-    })
+    });
   }
 
   onDeleteUser(userId: string): void {
@@ -65,8 +65,8 @@ export class UserComponent implements OnInit {
       width: '500px',
       data: {
         title: 'Confirm deletion',
-        message: 'Are you sure you want to delete this user?'
-      }
+        message: 'Are you sure you want to delete this user?',
+      },
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
@@ -77,13 +77,13 @@ export class UserComponent implements OnInit {
             this.snackbar.showError('test');
             //this.loadUsers();
           },
-          error: (err) => {
+          error: err => {
             console.error('Error occured whilst deleting a user', err);
             this.snackbar.showError(err);
-          }
-        })
+          },
+        });
       }
-    })
+    });
   }
 
   onPageChanged(event: PageEvent): void {

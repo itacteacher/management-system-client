@@ -1,32 +1,32 @@
 <mat-toolbar>
-    <mat-toolbar-row>
-        <button mat-icon-button [matMenuTriggerFor]="mainMenu">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span [routerLink]="''">Management board</span>
-        <span class="spacer"></span>
-        <ng-container *ngIf="!isLoggedIn()">
-            <button mat-button [routerLink]="'/register'">Register</button>
-            <button mat-button [routerLink]="'/login'">Log in</button>
-        </ng-container>
-        <button mat-button *ngIf="isLoggedIn()" (click)="onLogout()">Log out</button>
-        <button mat-icon-button>
-            <mat-icon>account_circle</mat-icon>
-        </button>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span [routerLink]="''">Management board</span>
+    <span class="spacer"></span>
+    <ng-container *ngIf="!isLoggedIn()">
+      <button mat-button [routerLink]="'/register'">Register</button>
+      <button mat-button [routerLink]="'/login'">Log in</button>
+    </ng-container>
+    <button mat-button *ngIf="isLoggedIn()" (click)="onLogout()">Log out</button>
+    <button mat-icon-button [routerLink]="'/profile'">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-menu #mainMenu="matMenu">
-    <button mat-menu-item [routerLink]="'/user'">
-        <mat-icon>pageview</mat-icon>
-        <span>Users</span>
-    </button>
-    <button mat-menu-item>
-        <mat-icon>help</mat-icon>
-        <span>Help</span>
-    </button>
-    <button mat-menu-item>
-        <mat-icon>settings</mat-icon>
-        <span>Settings</span>
-    </button>
+  <button mat-menu-item [routerLink]="'/user'">
+    <mat-icon>pageview</mat-icon>
+    <span>Users</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>help</mat-icon>
+    <span>Help</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>settings</mat-icon>
+    <span>Settings</span>
+  </button>
 </mat-menu>

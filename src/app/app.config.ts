@@ -8,8 +8,10 @@ import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHttpClient(withInterceptors([loaderInterceptor, authInterceptor])), 
-    provideZoneChangeDetection({ eventCoalescing: true }), 
-    provideRouter(routes), 
-    provideAnimationsAsync()]
+  providers: [
+    provideHttpClient(withInterceptors([loaderInterceptor, authInterceptor])),
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+  ],
 };

@@ -9,14 +9,9 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [MatToolbarModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    RouterLink, 
-    MatMenuModule,
-    CommonModule],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterLink, MatMenuModule, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   private authService = inject(AuthService);
@@ -24,7 +19,7 @@ export class HeaderComponent {
   onLogout(): void {
     this.authService.logout();
   }
-    
+
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
   }

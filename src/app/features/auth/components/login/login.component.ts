@@ -11,16 +11,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatButtonModule, MatCardModule, MatIconModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -29,12 +22,12 @@ export class LoginComponent {
   private router = inject(Router);
 
   hidePassword = signal(true);
-  
+
   constructor() {
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required]],
-      password: ['', [Validators.required]]
-    })
+      password: ['', [Validators.required]],
+    });
   }
 
   onLogin() {
@@ -44,9 +37,9 @@ export class LoginComponent {
         const response = this.authService.login(credentials);
         console.log('Login successful:', response);
         this.router.navigate(['']);
-      } catch(error) {
+      } catch (error) {
         console.error('Login failed:', error);
-      };
+      }
     }
   }
 
