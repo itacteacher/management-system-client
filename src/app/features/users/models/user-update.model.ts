@@ -1,7 +1,6 @@
-export type User = {
+export interface UserUpdate {
   id: string;
   firstName: string;
   lastName: string;
-  username: string;
   email: string;
-};
+}

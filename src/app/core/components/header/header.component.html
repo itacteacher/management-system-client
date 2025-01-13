@@ -9,9 +9,8 @@
       <button mat-button [routerLink]="'/register'">Register</button>
       <button mat-button [routerLink]="'/login'">Log in</button>
     </ng-container>
-    <button mat-button *ngIf="isLoggedIn()" (click)="onLogout()">Log out</button>
-    <button mat-icon-button [routerLink]="'/profile'">
-      <mat-icon>account_circle</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="isLoggedIn()">
+      <img src="images/user_placeholder.svg" alt="User icon" />
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -29,4 +28,19 @@
     <mat-icon>settings</mat-icon>
     <span>Settings</span>
   </button>
+</mat-menu>
+
+<mat-menu #userMenu="matMenu">
+  <div class="user-menu-header">
+    <mat-icon class="user-icon-large">account_circle</mat-icon>
+    <div class="user-info">
+      <div class="user-name">John Doe</div>
+      <div class="user-email">j.doe</div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item [routerLink]="'/profile'">Manage account</button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>Help</button>
+  <button mat-menu-item (click)="onLogout()">Log out</button>
 </mat-menu>

@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { User } from '../models/user.type';
+import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../../../core/services/api-config.service';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { UserUpdate } from '../models/user-update.type';
+import { UserUpdate } from '../models/user-update.model';
 
 export interface IPaginatedRespose<T> {
   items: T[];
@@ -21,8 +21,8 @@ export class UserService {
   http = inject(HttpClient);
   apiConfig = inject(ApiConfigService);
 
-  getUsers(): Observable<Array<User>> {
-    return this.http.get<Array<User>>(this.apiConfig.userUrl).pipe(
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiConfig.userUrl).pipe(
       map((users: User[]) => users.sort((a, b) => a.email.localeCompare(b.email))),
       catchError(this.handleError)
     );

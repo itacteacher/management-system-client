@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../../services/user.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
-import { User } from '../../models/user.type';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-edit-user',

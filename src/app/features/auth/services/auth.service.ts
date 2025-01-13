@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiConfigService } from '../../../core/services/api-config.service';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, retry } from 'rxjs';
 import { Router } from '@angular/router';
 import { IRegisterRequest } from '../models/register-request.model';
 import { ILoginRequest } from '../models/login-request.model';
@@ -19,8 +19,6 @@ export class AuthService {
 
   readonly TOKEN_KEY = 'authToken';
   readonly REFRESH_TOKEN_KEY = 'refreshToken';
-
-  constructor() {}
 
   async register(userData: IRegisterRequest) {
     try {
@@ -61,7 +59,7 @@ export class AuthService {
   }
 
   private async authenticate(url: string, body: any): Promise<IAuthResponse> {
-    const response = await firstValueFrom(this.http.post<IAuthResponse>(url, body));
+    const response = await firstValueFrom(this.http.post<IAuthResponse>(url, body).pipe(retry(3)));
 
     this.storage.setItem(this.TOKEN_KEY, response.token);
     this.storage.setItem(this.REFRESH_TOKEN_KEY, response.refreshToken);

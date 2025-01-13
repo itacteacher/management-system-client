@@ -1,7 +1,7 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { IPaginatedRespose, UserService } from '../../services/user.service';
 import { MatTableModule } from '@angular/material/table';
-import { User } from '../../models/user.type';
+import { User } from '../../models/user.model';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { EditUserComponent } from '../user-edit/user-edit.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,15 +21,13 @@ export class UserComponent implements OnInit {
   snackbar = inject(SnackbarService);
   dialog = inject(MatDialog);
 
-  users = signal<Array<User>>([]);
+  users = signal<User[]>([]);
   pageNumber = 0;
   pageSize = 5;
   totalCount = 0;
 
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
   errorMessage = '';
-
-  constructor() {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -74,8 +72,7 @@ export class UserComponent implements OnInit {
         this.userService.deleteUser(userId).subscribe({
           next: () => {
             console.log('user deleted');
-            this.snackbar.showError('test');
-            //this.loadUsers();
+            this.loadUsers();
           },
           error: err => {
             console.error('Error occured whilst deleting a user', err);
