@@ -1,3 +1,28 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.user-icon-large {
+  margin-right: 16px;
+  align-items: center;
+}
+
+.user-menu-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-email {
+  font-size: 0.875rem;
+  color: gray;
+}
