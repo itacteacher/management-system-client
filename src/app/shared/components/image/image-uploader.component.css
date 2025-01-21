@@ -1,0 +1,32 @@
+.profile-card {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.image-preview {
+  margin: 20px 0;
+}
+
+.preview-img {
+  max-width: 100%;
+  height: auto;
+}
+
+.placeholder {
+  font-size: 18px;
+  color: grey;
+  font-style: italic;
+}
+
+.file-input input {
+  margin-top: 10px;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+button {
+  margin: 5px;
+}

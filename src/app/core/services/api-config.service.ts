@@ -21,4 +21,8 @@ export class ApiConfigService {
   get projectUrl(): string {
     return `${this.apiBaseUrl}/Projects`;
   }
+
+  get imagesUrl(): string {
+    return `${this.apiBaseUrl}/Images`;
+  }
 }

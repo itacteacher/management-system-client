@@ -1,6 +1,7 @@
 .sidenav-container {
   height: 100vh;
   display: flex;
+  flex-direction: column;
 }
 
 .sidenav {
@@ -11,17 +12,37 @@
 
 .content {
   padding: 20px;
-  flex: 1;
+  flex-grow: 1;
 }
 
 .profile-card {
-  max-width: 800px;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.placeholder-icon {
-  width: 50px;
-  height: 50px;
-  background: lightgray;
+.profile-header {
+  display: flex;
+  justify-content: space-between; /* Для распределения пространства между колонками */
+  align-items: center; /* Для выравнивания по вертикали */
+  padding: 16px;
+}
+
+.avatar-column {
+  flex: 0 0 100px; /* Устанавливаем фиксированную ширину для картинки */
+  margin-right: 16px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 50%;
+}
+
+.text-column {
+  flex-grow: 1; /* Заставляем текст занимать оставшееся пространство */
+}
+
+mat-card-content {
+  margin-top: 16px;
 }
