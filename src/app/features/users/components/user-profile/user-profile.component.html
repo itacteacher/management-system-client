@@ -11,14 +11,18 @@
   <!-- Content -->
   <mat-sidenav-content class="content">
     <mat-card class="profile-card">
-      <mat-card-header>
-        <div mat-card-avatar>
-          <img src="images/user_placeholder.svg" alt="User icon" />
+      <mat-card-header class="profile-header">
+        <div class="avatar-column">
+          <img [src]="profileImage" alt="User icon" class="profile-image" />
         </div>
-        <mat-card-title>{{ user?.firstName }} {{ user?.lastName }}</mat-card-title>
-        <mat-card-subtitle>{{ user?.email }}</mat-card-subtitle>
+        <div class="text-column">
+          <mat-card-title>{{ user?.firstName }} {{ user?.lastName }}</mat-card-title>
+          <mat-card-subtitle>{{ user?.email }}</mat-card-subtitle>
+        </div>
       </mat-card-header>
-      <mat-card-content> </mat-card-content>
+      <mat-card-content>
+        <app-image-uploader [userId]="currentUserId()" (imageUploaded)="onImageUploaded()"></app-image-uploader>
+      </mat-card-content>
     </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>

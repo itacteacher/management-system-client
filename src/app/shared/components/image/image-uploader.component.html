@@ -1,0 +1,22 @@
+<mat-card class="profile-card">
+  <mat-card-header>
+    <mat-card-title>Profile Image</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="image-preview">
+      <img *ngIf="profileImage" [src]="profileImage" alt="Profile Image" class="preview-img" />
+      <span *ngIf="!profileImage" class="placeholder">No Image</span>
+    </div>
+
+    <div class="file-input">
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="uploadImage()" [disabled]="isUploading"><mat-icon>cloud_upload</mat-icon> Upload</button>
+      <button mat-raised-button color="warn" (click)="deleteImage()" [disabled]="!profileImage"><mat-icon>delete</mat-icon> Delete</button>
+      <mat-progress-spinner *ngIf="isUploading" mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </mat-card-content>
+</mat-card>
